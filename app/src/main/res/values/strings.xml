@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">WroclawTourGame</string>
+    <string name="i_am_here">I AM HERE</string>
+    <string name="next_point">Next point:</string>
+    <string name="distance_left">Distance left:</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="go_to_question">Go to question</string>
+    <string name="question">Question</string>
+    <string name="answer">Answer</string>
+</resources>

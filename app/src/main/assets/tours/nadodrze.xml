@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tour>
+    <name>Nadodrze</name>
+    <description>Nadodrze is in the northern part of Wrocław.</description>
+    <duration>3 hours</duration>
+    <point>
+        <name>Wzgórze słowiańskie</name>
+        <cords>51.12489362570356, 17.043649212964095</cords>
+        <description>Kolorowe ryby, błękit oceanów i rajski ogród oraz psy, dinozaury i portrety
+            na ścianie starej kamienicy.
+        </description>
+        <question>Ile kolorów?</question>
+        <answer>500</answer>
+        <answered>true</answered>
+    </point>
+    <point>
+        <name>Plac macieja</name>
+        <cords>51.119539331233256, 17.036096080518597</cords>
+        <description>Podwórko przy ulicy Roosevelta ozdobili artyści, których wspierali
+            mieszkańcy domów i uczynili z niego atrakcję turystyczną
+        </description>
+        <question>Ile barw?</question>
+        <answer>200</answer>
+        <answered>false</answered>
+    </point>
+</tour>

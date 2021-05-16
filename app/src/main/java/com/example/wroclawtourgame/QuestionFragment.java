@@ -55,8 +55,12 @@ public class QuestionFragment extends Fragment {
 
         bAnswer = rootView.findViewById(R.id.answerButton);
         bAnswer.setOnClickListener(v -> {
-            if (etAnswer.getText().toString().toLowerCase().equals(mAnswer.toLowerCase())) {
+            if (answerIsCorrect()) {
                 Toast.makeText(rootView.getContext(), "Good answer!", Toast.LENGTH_SHORT).show();
+
+                PointActivity pointActivity = (PointActivity) getActivity();
+                assert pointActivity != null;
+                pointActivity.pointFinished();
             } else {
                 Toast.makeText(rootView.getContext(), "Wrong answer! Try again!", Toast.LENGTH_SHORT).show();
             }
@@ -65,5 +69,9 @@ public class QuestionFragment extends Fragment {
 
         // Inflate the layout for this fragment
         return rootView;
+    }
+
+    private boolean answerIsCorrect(){
+        return etAnswer.getText().toString().toLowerCase().equals(mAnswer.toLowerCase());
     }
 }

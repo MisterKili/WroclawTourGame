@@ -61,60 +61,58 @@ public class PointActivity extends AppCompatActivity {
             }
         }
 
-        Optional<TourPoint> optPoint = mTour.firstNotVisitedPoint();
+        mFragmentManager = getSupportFragmentManager();
 
+        tvNextPoint = findViewById(R.id.nextPointNameTextView);
+        bIAmHere = findViewById(R.id.iAmHereButton);
+
+        dealWithNewPoint();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void dealWithNewPoint() {
+        Optional<TourPoint> optPoint = mTour.firstNotVisitedPoint();
         if (!optPoint.isPresent()) {
             startTourListActivityWithToast("All the points in this tour have been visited");
         } else {
             mNextPoint = optPoint.get();
 
-            mFragmentManager = getSupportFragmentManager();
+            openMapFragment();
 
-            mFragmentTransaction = mFragmentManager.beginTransaction();
-            mMapFragment = new MapFragment(mNextPoint);
-            mFragmentTransaction.add(R.id.fragmentContainerView, mMapFragment);
-            mFragmentTransaction.attach(mMapFragment);
-            mFragmentTransaction.commit();
-
-            tvNextPoint = findViewById(R.id.nextPointNameTextView);
             tvNextPoint.setText(mNextPoint.getName());
 
-
-            bIAmHere = findViewById(R.id.iAmHereButton);
             bIAmHere.setOnClickListener(v -> {
                 bIAmHere.setClickable(false);
-
-                mFragmentTransaction = mFragmentManager.beginTransaction();
-                mPointDescriptionFragment = PointDescriptionFragment.newInstance(mNextPoint.getDescription());
-                mFragmentTransaction.replace(R.id.fragmentContainerView, mPointDescriptionFragment);
-                mFragmentTransaction.commit();
+                openPointDescriptionFragment();
             });
-
-            fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-                return;
-            }
-            locationRequest = createLocationRequest();
-
-            tvDistanceLeft = findViewById(R.id.distanceLeftValueTextView);
-
-            locationCallback = new LocationCallback() {
-                @Override
-                public void onLocationResult(LocationResult locationResult) {
-                    if (locationResult == null) {
-                        return;
-                    }
-                    for (Location location : locationResult.getLocations()) {
-                        Cords currCords = new Cords(location.getLongitude(), location.getLatitude());
-                        double distance = currCords.getDistanceFrom(mNextPoint.getCords());
-
-                        tvDistanceLeft.setText(String.format("%.0f", distance) + " m");
-                    }
-                }
-            };
-
+            setDistanceLeftValue();
         }
+    }
+
+    private void setDistanceLeftValue() {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            return;
+        }
+        locationRequest = createLocationRequest();
+
+        tvDistanceLeft = findViewById(R.id.distanceLeftValueTextView);
+
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                if (locationResult == null) {
+                    return;
+                }
+                for (Location location : locationResult.getLocations()) {
+                    Cords currCords = new Cords(location.getLongitude(), location.getLatitude());
+                    double distance = currCords.getDistanceFrom(mNextPoint.getCords());
+
+                    tvDistanceLeft.setText(String.format("%.0f", distance) + " m");
+                }
+            }
+        };
     }
 
     private LocationRequest createLocationRequest() {
@@ -150,6 +148,24 @@ public class PointActivity extends AppCompatActivity {
         mQuestionFragment = QuestionFragment.newInstance(mNextPoint.getQuestion(), mNextPoint.getAnswer());
         mFragmentTransaction.replace(R.id.fragmentContainerView, mQuestionFragment);
         mFragmentTransaction.commit();
+    }
+
+    private void openMapFragment() {
+        mFragmentTransaction = mFragmentManager.beginTransaction();
+        mMapFragment = new MapFragment(mNextPoint);
+        mFragmentTransaction.add(R.id.fragmentContainerView, mMapFragment);
+        mFragmentTransaction.attach(mMapFragment);
+        mFragmentTransaction.commit();
+    }
+
+    private void openPointDescriptionFragment() {
+        mFragmentTransaction = mFragmentManager.beginTransaction();
+        mPointDescriptionFragment = PointDescriptionFragment.newInstance(mNextPoint.getDescription());
+        mFragmentTransaction.replace(R.id.fragmentContainerView, mPointDescriptionFragment);
+        mFragmentTransaction.commit();
+    }
+
+    public void pointFinished() {
     }
 
 //    public void goToNextPoint() {

@@ -4,6 +4,8 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.wroclawtourgame.logic.TourWriter;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.Optional;
 
 public class Tour implements Serializable {
 
+    private String fileName;
     private String name;
     private String description;
     private String duration;
@@ -20,9 +23,12 @@ public class Tour implements Serializable {
         this.points = new ArrayList<>();
     }
 
-    public Tour(String name) {
-        this.name = name;
-        this.points = new ArrayList<>();
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     public String getDuration() {

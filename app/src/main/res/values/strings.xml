@@ -8,4 +8,5 @@
     <string name="go_to_question">Go to question</string>
     <string name="question">Question</string>
     <string name="answer">Answer</string>
+    <string name="loading">Loading...</string>
 </resources>

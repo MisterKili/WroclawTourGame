@@ -58,4 +58,8 @@ public class TourPoint implements Serializable {
     public void setAnswered(String sAnswered) {
         this.answered = sAnswered.equals("true");
     }
+
+    public void markAsAnswered() {
+        answered = true;
+    }
 }

@@ -165,13 +165,10 @@ public class PointActivity extends AppCompatActivity {
         mFragmentTransaction.commit();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void pointFinished() {
-    }
+        mNextPoint.markAsAnswered();
 
-//    public void goToNextPoint() {
-//        mFragmentTransaction = mFragmentManager.beginTransaction();
-//        mMapFragment = new MapFragment();
-//        mFragmentTransaction.replace(R.id.fragmentContainerView, mMapFragment);
-//        mFragmentTransaction.commit();
-//    }
+        dealWithNewPoint();
+    }
 }

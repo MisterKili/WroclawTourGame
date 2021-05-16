@@ -10,21 +10,23 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.wroclawtourgame.model.Cords;
+import com.example.wroclawtourgame.model.TourPoint;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapFragment extends Fragment {
 
-    private Cords mCords;
+    private TourPoint mPoint;
 
     public MapFragment() {}
 
-    public MapFragment(Cords cords) {
-        mCords = cords;
+    public MapFragment(TourPoint point) {
+        mPoint = point;
     }
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
@@ -40,9 +42,12 @@ public class MapFragment extends Fragment {
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            LatLng nextPoint = new LatLng(mCords.getLatitude(), mCords.getLongitude());
-            googleMap.addMarker(new MarkerOptions().position(nextPoint).title("Next point"));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(nextPoint));
+            LatLng nextPoint = new LatLng(mPoint.getCords().getLatitude(), mPoint.getCords().getLongitude());
+            googleMap.addMarker(new MarkerOptions().position(nextPoint).title(mPoint.getName()));
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(nextPoint)
+                    .zoom(17).build();
+            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
     };
 

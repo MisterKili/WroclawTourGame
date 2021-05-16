@@ -71,7 +71,7 @@ public class PointActivity extends AppCompatActivity {
             mFragmentManager = getSupportFragmentManager();
 
             mFragmentTransaction = mFragmentManager.beginTransaction();
-            mMapFragment = new MapFragment(mNextPoint.getCords());
+            mMapFragment = new MapFragment(mNextPoint);
             mFragmentTransaction.add(R.id.fragmentContainerView, mMapFragment);
             mFragmentTransaction.attach(mMapFragment);
             mFragmentTransaction.commit();

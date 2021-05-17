@@ -1,6 +1,7 @@
 package com.example.wroclawtourgame;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -29,6 +30,9 @@ import com.google.android.gms.location.LocationServices;
 import java.util.Optional;
 
 public class PointActivity extends AppCompatActivity {
+
+    private final int MAX_DISTANCE_ACCEPTED = 50;
+    private int currentDistance = Integer.MAX_VALUE;
 
     Tour mTour;
     TourPoint mNextPoint;
@@ -83,7 +87,12 @@ public class PointActivity extends AppCompatActivity {
 
             bIAmHere.setOnClickListener(v -> {
                 bIAmHere.setClickable(false);
-                openPointDescriptionFragment();
+                if (isCloseEnough()) {
+                    openPointDescriptionFragment();
+                } else {
+                    Toast.makeText(this, "You have to be closer than " + MAX_DISTANCE_ACCEPTED + " m from the point.", Toast.LENGTH_SHORT).show();
+                }
+
             });
             setDistanceLeftValue();
         }
@@ -100,6 +109,7 @@ public class PointActivity extends AppCompatActivity {
         tvDistanceLeft = findViewById(R.id.distanceLeftValueTextView);
 
         locationCallback = new LocationCallback() {
+            @SuppressLint({"DefaultLocale", "SetTextI18n"})
             @Override
             public void onLocationResult(LocationResult locationResult) {
                 if (locationResult == null) {
@@ -107,9 +117,9 @@ public class PointActivity extends AppCompatActivity {
                 }
                 for (Location location : locationResult.getLocations()) {
                     Cords currCords = new Cords(location.getLongitude(), location.getLatitude());
-                    double distance = currCords.getDistanceFrom(mNextPoint.getCords());
+                    currentDistance = (int) currCords.getDistanceFrom(mNextPoint.getCords());
 
-                    tvDistanceLeft.setText(String.format("%.0f", distance) + " m");
+                    tvDistanceLeft.setText(currentDistance + " m");
                 }
             }
         };
@@ -123,18 +133,16 @@ public class PointActivity extends AppCompatActivity {
         return locationRequest;
     }
 
+    private boolean isCloseEnough() {
+        return currentDistance <= MAX_DISTANCE_ACCEPTED;
+    }
+
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-            return;
-        }
-        fusedLocationClient.requestLocationUpdates(locationRequest,
-                locationCallback,
-                Looper.getMainLooper());
+        setDistanceLeftValue();
     }
 
     private void startTourListActivityWithToast(String toastText) {

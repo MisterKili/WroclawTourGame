@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <tour>
     <name>Nadodrze</name>
-    <description>Nadodrze is in the northern part of Wrocław.</description>
+    <description>Nadodrze is located in the northern part of Wrocław.</description>
     <duration>3 hours</duration>
     <point>
-        <name>Wzgórze słowiańskie</name>
+        <name>Slavic Hill</name>
         <cords>51.12489362570356, 17.043649212964095</cords>
-        <description>Kolorowe ryby, błękit oceanów i rajski ogród oraz psy, dinozaury i portrety
-            na ścianie starej kamienicy.
-        </description>
-        <question>Ile kolorów?</question>
-        <answer>500</answer>
-        <answered>true</answered>
+        <description>Slavic Hill is an artificial hill that was formed with rubble from buildings destroyed during the World War II. On the top of the hill there is a monument honoring the Release of Wrocław.</description>
+        <question>What is the color of the monument?</question>
+        <answer>white</answer>
+        <answered>false</answered>
     </point>
     <point>
-        <name>Plac macieja</name>
-        <cords>51.119539331233256, 17.036096080518597</cords>
-        <description>Podwórko przy ulicy Roosevelta ozdobili artyści, których wspierali
-            mieszkańcy domów i uczynili z niego atrakcję turystyczną
-        </description>
-        <question>Ile barw?</question>
-        <answer>200</answer>
+        <name>Colorful backyards</name>
+        <cords>51.1222232157349, 17.04312103383588</cords>
+        <description>The backyard is decorated with a lot of murals. On some of the paintings there are the inhabitants of the building around.</description>
+        <question>How many cats are painted on the walls?</question>
+        <answer>17</answer>
+        <answered>false</answered>
+    </point>
+    <point>
+        <name>Tolpa Park</name>
+        <cords>51.12074872326082, 17.05363415129155</cords>
+        <description>The Tolpa Park was set up in the beginning of XX century. It contains a small hill and a pond. From the hill there is a beautiful view to a E1 building belonging to University of Science Technology.</description>
+        <question>Which faculty is located in the E1 building?</question>
+        <answer>architecture</answer>
         <answered>false</answered>
     </point>
 </tour>

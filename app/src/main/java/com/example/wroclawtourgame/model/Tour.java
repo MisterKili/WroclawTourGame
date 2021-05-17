@@ -72,6 +72,10 @@ public class Tour implements Serializable {
     }
 
     public boolean isFinished() {
+        if (!hasPoints()) {
+            return false;
+        }
+        
         for (TourPoint point : points) {
             if (!point.isAnswered()) {
                 return false;

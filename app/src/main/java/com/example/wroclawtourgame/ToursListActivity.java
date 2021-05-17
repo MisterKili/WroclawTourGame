@@ -1,20 +1,18 @@
 package com.example.wroclawtourgame;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
+import android.os.Build;
+import android.os.Bundle;
+import android.util.Log;
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.Manifest;
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.content.res.AssetManager;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
 
 import com.example.wroclawtourgame.logic.TourReader;
 import com.example.wroclawtourgame.model.Tour;
@@ -69,7 +67,7 @@ public class ToursListActivity extends AppCompatActivity {
 
         InputStream inputStream = null;
         try {
-            for (File tourFile: tours) {
+            for (File tourFile : tours) {
                 inputStream = new FileInputStream(tourFile);
                 tour = tourReader.parse(inputStream);
                 mTours.add(tour);
@@ -112,10 +110,9 @@ public class ToursListActivity extends AppCompatActivity {
                     out = new FileOutputStream(outFile);
                     copyFile(in, out);
                 }
-            } catch(IOException e) {
+            } catch (IOException e) {
                 Log.e("tag", "Failed to copy asset file: " + filename, e);
-            }
-            finally {
+            } finally {
                 if (in != null) {
                     try {
                         in.close();
@@ -133,10 +130,11 @@ public class ToursListActivity extends AppCompatActivity {
             }
         }
     }
+
     private void copyFile(InputStream in, OutputStream out) throws IOException {
         byte[] buffer = new byte[1024];
         int read;
-        while((read = in.read(buffer)) != -1){
+        while ((read = in.read(buffer)) != -1) {
             out.write(buffer, 0, read);
         }
     }

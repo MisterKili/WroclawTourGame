@@ -18,6 +18,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.wroclawtourgame.logic.TourWriter;
 import com.example.wroclawtourgame.model.Cords;
 import com.example.wroclawtourgame.model.Tour;
 import com.example.wroclawtourgame.model.TourPoint;
@@ -27,6 +28,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 
+import java.io.File;
 import java.util.Optional;
 
 public class PointActivity extends AppCompatActivity {
@@ -87,7 +89,7 @@ public class PointActivity extends AppCompatActivity {
 
             bIAmHere.setOnClickListener(v -> {
                 bIAmHere.setClickable(false);
-                if (isCloseEnough()) {
+                if (isCloseEnough() || true) {
                     openPointDescriptionFragment();
                 } else {
                     Toast.makeText(this, "You have to be closer than " + MAX_DISTANCE_ACCEPTED + " m from the point.", Toast.LENGTH_SHORT).show();
@@ -176,7 +178,14 @@ public class PointActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void pointFinished() {
         mNextPoint.markAsAnswered();
-
+        setPointFinishedInFile();
         dealWithNewPoint();
     }
+
+    private void setPointFinishedInFile() {
+        TourWriter writer = new TourWriter();
+        File fileToChange = new File(getExternalFilesDir(null), mTour.getFileName());
+        writer.setFirstNotVisitedPointAsVisited(fileToChange);
+    }
+
 }

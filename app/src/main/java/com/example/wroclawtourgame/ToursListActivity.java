@@ -65,11 +65,11 @@ public class ToursListActivity extends AppCompatActivity {
         TourReader tourReader = new TourReader();
         Tour tour;
 
-        InputStream inputStream = null;
+        FileInputStream inputStream = null;
         try {
             for (File tourFile : tours) {
                 inputStream = new FileInputStream(tourFile);
-                tour = tourReader.parse(inputStream);
+                tour = tourReader.parse(inputStream, tourFile.getName());
                 mTours.add(tour);
             }
         } catch (XmlPullParserException e) {

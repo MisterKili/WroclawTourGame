@@ -9,6 +9,7 @@ import com.example.wroclawtourgame.model.TourPoint;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -17,13 +18,15 @@ public class TourReader {
     // We don't use namespaces
     private static final String ns = null;
 
-    public Tour parse(InputStream inputStream) throws XmlPullParserException, IOException {
+    public Tour parse(FileInputStream inputStream, String fileName) throws XmlPullParserException, IOException {
         try {
             XmlPullParser parser = Xml.newPullParser();
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
             parser.setInput(inputStream, null);
             parser.nextTag();
-            return readTour(parser);
+            Tour tour = readTour(parser);
+            tour.setFileName(fileName);
+            return tour;
         } finally {
             inputStream.close();
         }

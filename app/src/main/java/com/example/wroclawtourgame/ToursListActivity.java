@@ -1,5 +1,6 @@
 package com.example.wroclawtourgame;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -10,6 +11,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -20,6 +22,7 @@ import com.example.wroclawtourgame.model.Tour;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,6 +37,7 @@ public class ToursListActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private ToursListAdapter mAdapter;
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,23 +57,35 @@ public class ToursListActivity extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void loadTours() {
         mTours = new ArrayList<>();
 
-        AssetManager assetManager = this.getAssets();
+        File file = getExternalFilesDir(null);
+        File[] tours = file.listFiles();
+
         TourReader tourReader = new TourReader();
         Tour tour;
-        try {
-            String[] tours = assetManager.list("tours");
 
-            for (String tourFileName : tours) {
-                tour = tourReader.parse(assetManager.open("tours/" + tourFileName));
+        InputStream inputStream = null;
+        try {
+            for (File tourFile: tours) {
+                inputStream = new FileInputStream(tourFile);
+                tour = tourReader.parse(inputStream);
                 mTours.add(tour);
             }
         } catch (XmlPullParserException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 

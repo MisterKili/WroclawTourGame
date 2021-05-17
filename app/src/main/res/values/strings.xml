@@ -9,4 +9,10 @@
     <string name="question">Question</string>
     <string name="answer">Answer</string>
     <string name="loading">Loading...</string>
+    <string name="all_points_visited">All the points in this tour have been visited</string>
+    <string name="you_have_to_be_closer">You have to be closer than </string>
+    <string name="m_from_the_point"> m from the point.</string>
+    <string name="good_answer">Good answer!</string>
+    <string name="wrong_answer_try_again">Wrong answer! Try again!</string>
+    <string name="no_points_in_this_tour">There are no points in this tour</string>
 </resources>

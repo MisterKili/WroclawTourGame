@@ -79,7 +79,7 @@ public class PointActivity extends AppCompatActivity {
     private void dealWithNewPoint() {
         Optional<TourPoint> optPoint = mTour.firstNotVisitedPoint();
         if (!optPoint.isPresent()) {
-            startTourListActivityWithToast("All the points in this tour have been visited");
+            startTourListActivityWithToast(getString(R.string.all_points_visited));
         } else {
             mNextPoint = optPoint.get();
 
@@ -92,7 +92,7 @@ public class PointActivity extends AppCompatActivity {
                 if (isCloseEnough()) {
                     openPointDescriptionFragment();
                 } else {
-                    Toast.makeText(this, "You have to be closer than " + MAX_DISTANCE_ACCEPTED + " m from the point.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.you_have_to_be_closer) + MAX_DISTANCE_ACCEPTED + getString(R.string.m_from_the_point), Toast.LENGTH_SHORT).show();
                 }
 
             });

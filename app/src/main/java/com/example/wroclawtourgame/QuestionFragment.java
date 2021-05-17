@@ -59,13 +59,13 @@ public class QuestionFragment extends Fragment {
         bAnswer = rootView.findViewById(R.id.answerButton);
         bAnswer.setOnClickListener(v -> {
             if (answerIsCorrect()) {
-                Toast.makeText(rootView.getContext(), "Good answer!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(rootView.getContext(), (R.string.good_answer), Toast.LENGTH_SHORT).show();
 
                 PointActivity pointActivity = (PointActivity) getActivity();
                 assert pointActivity != null;
                 pointActivity.pointFinished();
             } else {
-                Toast.makeText(rootView.getContext(), "Wrong answer! Try again!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(rootView.getContext(), (R.string.wrong_answer_try_again), Toast.LENGTH_SHORT).show();
             }
         });
 

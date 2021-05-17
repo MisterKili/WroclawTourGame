@@ -72,9 +72,9 @@ public class ToursListAdapter extends RecyclerView.Adapter<ToursListAdapter.Tour
             Tour currTour = mTours.get(getAdapterPosition());
 
             if (!currTour.hasPoints()) {
-                Toast.makeText(view.getContext(), "There are no points in this tour", Toast.LENGTH_LONG).show();
+                Toast.makeText(view.getContext(), (R.string.no_points_in_this_tour), Toast.LENGTH_LONG).show();
             } else if (currTour.isFinished()) {
-                Toast.makeText(view.getContext(), "All the points in this tour have been visited", Toast.LENGTH_LONG).show();
+                Toast.makeText(view.getContext(), (R.string.all_points_visited), Toast.LENGTH_LONG).show();
             } else {
                 Intent intent = new Intent(view.getContext(), PointActivity.class);
                 intent.putExtra("tourObject", currTour);

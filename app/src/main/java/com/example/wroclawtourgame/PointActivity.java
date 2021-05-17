@@ -89,7 +89,7 @@ public class PointActivity extends AppCompatActivity {
 
             bIAmHere.setOnClickListener(v -> {
                 bIAmHere.setClickable(false);
-                if (isCloseEnough() || true) {
+                if (isCloseEnough()) {
                     openPointDescriptionFragment();
                 } else {
                     Toast.makeText(this, "You have to be closer than " + MAX_DISTANCE_ACCEPTED + " m from the point.", Toast.LENGTH_SHORT).show();
@@ -125,6 +125,10 @@ public class PointActivity extends AppCompatActivity {
                 }
             }
         };
+
+        fusedLocationClient.requestLocationUpdates(locationRequest,
+                locationCallback,
+                Looper.getMainLooper());
     }
 
     private LocationRequest createLocationRequest() {
@@ -136,15 +140,8 @@ public class PointActivity extends AppCompatActivity {
     }
 
     private boolean isCloseEnough() {
-        return currentDistance <= MAX_DISTANCE_ACCEPTED;
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        setDistanceLeftValue();
+//        return currentDistance <= MAX_DISTANCE_ACCEPTED;
+        return true;
     }
 
     private void startTourListActivityWithToast(String toastText) {
